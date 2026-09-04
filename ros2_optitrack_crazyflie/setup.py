@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'make_crazy_fly'
+package_name = 'ros2_optitrack_crazyflie'
 
 setup(
     name=package_name,
