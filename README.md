@@ -1,4 +1,4 @@
-# Crazyflie Test Scripts
+# Crazyflie Learning Lab
 
 A lightweight collection of Python test scripts for interacting with the Bitcraze Crazyflie 2.X quadcopter using the official Crazyflie Python library (`cflib`).
 
