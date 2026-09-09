@@ -55,7 +55,7 @@ If you do not know which address, channel, or datarate your Crazyflie is configu
 ## Scripts Description
 
 ### 1. [HelloCrazy.py](HelloCrazy.py)
-Tests basic communication with the Crazyflie. After establishing a synchronous connection (`SyncCrazyflie`), it spins the motors briefly at low thrust (safe for table use) to provide immediate physical feedback that the drone is connected and responsive, then safely disconnects.
+Tests basic communication with the Crazyflie. After establishing a synchronous connection (`SyncCrazyflie`), it sequentially spins each motor individually (M1 through M4) at low PWM power using the `motorPowerSet` parameter group, printing which motor is currently spinning in the terminal to provide physical feedback, then safely disconnects.
 
 ```bash
 python HelloCrazy.py
