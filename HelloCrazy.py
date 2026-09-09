@@ -1,5 +1,6 @@
 """
-Simple script for connecting to the crazyflie and print if connected
+Simple script for connecting to the Crazyflie, verifying connection,
+and briefly spinning the motors to provide physical feedback.
 """
 
 import time
@@ -7,28 +8,35 @@ import time
 import cflib.crtp
 from cflib.crazyflie import Crazyflie
 from cflib.crazyflie.syncCrazyflie import SyncCrazyflie
-from cflib.utils import uri_helper
-
-# This is the main connection
-uri = uri_helper.uri_from_env(default="radio://0/120/2M/E7E7E7E7E7")
-"""
-    1. radio interface / 0
-    2. radio channel / 120
-    3. radio bandwidth / 2M
-    4. crazyflie direction 
-"""
+from config import URI
 
 
-def simple_connect():
+def simple_connect(scf):
+    """
+    Test connection to the Crazyflie and briefly spin motors at low thrust.
+    """
+    print("Connected to Crazyflie successfully.")
+    print("Spinning motors briefly for physical feedback...")
 
-    print("Yeah, I'm connected! :D")
-    time.sleep(3)
-    print("Now I will disconnect :'(")
+    commander = scf.cf.commander
+
+    # Spin motors at a low thrust value (well below liftoff threshold)
+    # to physically verify motor response
+    low_thrust = 15000
+    for _ in range(5):
+        commander.send_setpoint(0.0, 0.0, 0.0, low_thrust)
+        time.sleep(0.1)
+
+    # Stop motors
+    commander.send_setpoint(0.0, 0.0, 0.0, 0)
+    time.sleep(1)
+    print("Disconnecting from Crazyflie.")
 
 
 if __name__ == "__main__":
     # Initialize the low-level drivers
     cflib.crtp.init_drivers()
 
-    with SyncCrazyflie(uri, cf=Crazyflie(rw_cache="./cache")) as scf:
-        simple_connect()
+    print(f"Connecting to {URI}...")
+    with SyncCrazyflie(URI, cf=Crazyflie(rw_cache="./cache")) as scf:
+        simple_connect(scf)

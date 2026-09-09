@@ -1,1 +1,5 @@
 cache/
+__pycache__/
+ros2_optitrack_crazyflie/build/
+ros2_optitrack_crazyflie/install/
+ros2_optitrack_crazyflie/log/
